@@ -1,48 +1,81 @@
+
 import java.util.Iterator;
 import java.util.Random;
-
 import javax.swing.JOptionPane;
-import java.lang.Math;
+
 public class Armazem_de_Nomes {
 	public static void main(String[] args) {
+		
 		String[] bancoDePalavras = {"Peixe", "Arvore", "Fome", "Amor", "Empreendedorismo"};
-		String[] temas = {"Animal", "Natureza", "CondiÁ„o sensitiva", "Sentimento", "NegÛcios"};
-		String msg = "";
+		String[] temas = {"Animal", "Natureza", "Condi√ß√£o sensitiva", "Sentimento", "Neg√≥cios"};
+		
+		int cont = 0, i;
 		
 		Random palavra = new Random();
 		int qtd_palavras = palavra.nextInt(3);
-		String[] DicionarioDasSelecionadas = new String[qtd_palavras];
+		String[] listaDasSelecionadas = new String[qtd_palavras];
 		
-		while(qtd_palavras + 1 > 0) {
+		while(cont < qtd_palavras) {
 			
 			int posicaoDaPalavra = palavra.nextInt(bancoDePalavras.length);
 			int tamanho = bancoDePalavras[posicaoDaPalavra].length();
-
-			JOptionPane.showMessageDialog(null,tamanho);
+			String[] msg = new String[tamanho];
+			String msgF = "";
+			JOptionPane.showMessageDialog(null,"Tamanho da palavra: " + tamanho + "\n");
 			
 			
-			for (int i = 0; i < tamanho; i++) {
-				msg += "_ ";
+			
+			for (i = 0; i < tamanho; i++) {
+				msg[i] = "_ ";
+				msgF += msg[i];
 				}
-				msg +=  "\n" + temas[posicaoDaPalavra] + "\n";
+				msgF +=  "\n" + temas[posicaoDaPalavra] + "\n";
+
 				
-				
-			String palavraEscolhida = temas[posicaoDaPalavra];
-			JOptionPane.showMessageDialog(null,msg);
+			String palavraEscolhida = bancoDePalavras[posicaoDaPalavra];
+			listaDasSelecionadas[cont] = palavraEscolhida;
+			cont ++;
 			
+				
 				while(tamanho > 0){	
-					String letra = JOptionPane.showInputDialog("Diga uma letra: ");
+					
+					String letra = JOptionPane.showInputDialog(msgF + "Diga uma letra: ");
+					msgF = "";
+					int contAcerto = 0;
 					
 					while (letra.length() > 1){
-						JOptionPane.showMessageDialog(null, "N„o È v·lido digitar mais"
+						
+						JOptionPane.showMessageDialog(null, "N√£o √© v√°lido digitar mais"
 								+ " de uma letra por tentativa. Tente novamente.");
 						letra = JOptionPane.showInputDialog("Diga uma letra: ");
 						}
-					tamanho --;
+					
+					for(i = 0; i < tamanho; i++){
+						String letraDaVez = String.valueOf(palavraEscolhida.charAt(i));
+						
+						if(letra.equalsIgnoreCase(letraDaVez)){
+							msg[i] = letraDaVez;
+							
+							}
+						}
+					
+					
+					for (i = 0; i < tamanho; i++) {
+						if(msg[i].equals("_")){
+							contAcerto ++;
+						}
+						msgF += msg[i];
+						}
+					
+					if (contAcerto == 0){
+						JOptionPane.showMessageDialog(null, "Parab√©ns, voc√™ venceu!");
+					}
+						msgF +=  "\n" + temas[posicaoDaPalavra] + "\n";
 					}
 				
-					msg = "";
-					qtd_palavras --;
+				
+					msg[i] = "";
+					msgF = "";
 				}
 		
 		
